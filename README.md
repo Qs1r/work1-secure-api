@@ -86,7 +86,7 @@ GitHub Actions 自动化安全扫描：
 
 流水线配置见 `.github/workflows/ci.yml`，最近一次成功运行：
 
-> [最后一次成功流水线运行](https://github.com/Qs1r/work1-secure-api/actions/runs/39364347446)
+> [最后一次成功流水线运行](https://github.com/Qs1r/work1-secure-api/actions/runs/39542958037)
 
 ### SAST/SCA 报告截图
 
