@@ -2,4 +2,3 @@ fastapi
 uvicorn[standard]
 PyJWT
 bcrypt
-（内容由AI生成，仅供参考）
