@@ -1,6 +1,7 @@
 import sqlite3
 from datetime import datetime, timedelta, timezone
 
+import html
 import bcrypt
 import jwt
 from fastapi import FastAPI, Depends, HTTPException, Header
@@ -81,11 +82,11 @@ def get_current_user(authorization: str = Header(default="")):
 # ===== 接口 2: 受保护的数据接口 =====
 @app.get("/api/data")
 def get_data(user: dict = Depends(get_current_user)):
-    return {"data": [{"id": user["sub"], "username": user["username"]}],
+    return {"data": [{"id": user["sub"], "username": html.escape(user["username"])}],
             "message": "认证成功, 已返回数据"}
 
 # ===== 接口 3: 个人资料接口 (自选接口) =====
 @app.get("/api/profile")
 def get_profile(user: dict = Depends(get_current_user)):
-    return {"profile": {"id": user["sub"], "username": user["username"],
+    return {"profile": {"id": user["sub"], "username": html.escape(user["username"]),
                         "member_since": "2026-10-19"}}

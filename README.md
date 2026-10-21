@@ -1,3 +1,14 @@
+---
+AIGC:
+    Label: "1"
+    ContentProducer: 001191440300708461136T1XGW3
+    ProduceID: fa6d20be7fee21a8b0b752ab67751b4b_8c67c643cc3511f1b76f525400638852
+    ReservedCode1: i6A4rqu6T+XnWkZoTKJQkLxyKKAdNFCY8gbF7t7DY5ieit1rn3RGnHy6YxtGML5z56nJx1W14uyrThdpyY57AQOlcppNnsnPP6+DrjPobkRjzbPuDrbVcxK0+PuIhj4KYasULfMzBy+39NGbz/VRu2xtToCa9cPeiHppc0AQcmXYCpkxqQh+HguUcgk=
+    ContentPropagator: 001191440300708461136T1XGW3
+    PropagateID: fa6d20be7fee21a8b0b752ab67751b4b_8c67c643cc3511f1b76f525400638852
+    ReservedCode2: i6A4rqu6T+XnWkZoTKJQkLxyKKAdNFCY8gbF7t7DY5ieit1rn3RGnHy6YxtGML5z56nJx1W14uyrThdpyY57AQOlcppNnsnPP6+DrjPobkRjzbPuDrbVcxK0+PuIhj4KYasULfMzBy+39NGbz/VRu2xtToCa9cPeiHppc0AQcmXYCpkxqQh+HguUcgk=
+---
+
 # Work1 Secure REST API
 
 基于 FastAPI 的安全 REST API 实验项目：实现 JWT 认证、bcrypt 密码哈希与参数化查询防 SQL 注入。
@@ -54,6 +65,18 @@ curl.exe -H "Authorization: Bearer <token>" http://127.0.0.1:8000/api/profile
 
 测试截图见 `docs/` 目录（curl 与 Swagger 验证结果）。
 
+### API 测试截图
+
+![登录成功返回 200](docs/api-login-success.png)
+
+![缺少 Token 返回 401](docs/api-missing-token-401.png)
+
+![无效 Token 被拒绝](docs/api-invalid-token.png)
+
+![健康检查返回 ok](docs/api-health-ok.png)
+
+![Swagger UI 概览](docs/api-swagger-overview.png)
+
 ## 7. CI/CD 流水线
 
 GitHub Actions 自动化安全扫描：
@@ -61,11 +84,27 @@ GitHub Actions 自动化安全扫描：
 - **bandit**：Python 代码静态安全分析（SAST）。
 - **Dependency-Check**：依赖库漏洞扫描（SCA）。
 
-流水线配置见 `.github/workflows/ci.yml`，最近一次运行结果：
+流水线配置见 `.github/workflows/ci.yml`，最近一次成功运行：
 
-> 待推送后补充流水线链接
+> [最后一次成功流水线运行](https://github.com/Qs1r/work1-secure-api/actions/runs/39364347446)
+
+### SAST/SCA 报告截图
+
+![CI 流水线总览](docs/ci-summary.png)
+
+![CI 流水线步骤](docs/ci-steps.png)
+
+![bandit 安全扫描报告](docs/ci-bandit.png)
+
+![dependency-check 依赖扫描报告](docs/ci-dependency-check.png)
 
 ## 8. CVE 复现与修复
 
 - **CVE-2014-6271（Shellshock）**：使用 vulhub 复现漏洞环境，分析原理并给出修复方案。
-- 复现过程、截图与修复说明见 `fix/` 目录（后续补充）。
+- **复现结论**：通过构造恶意 User-Agent 请求头 `() { :; }; echo; /usr/bin/id` 访问 `victim.cgi`，成功在未打补丁的 Bash 4.3.0 上执行命令（HTTP 200，返回 `uid=33(www-data)`），确认命令注入；同一 payload 访问已打补丁的 `safe.cgi` 时仅返回正常 HTML（Hello world），无命令输出，证明补丁有效。
+- **复现截图**：下图左侧/上方为 `victim.cgi` 命令注入成功，右侧/下方为 `safe.cgi` 修复后正常返回，为复现与修复对照截图。
+
+![Shellshock 复现与修复对照](docs/cve-reproduce.png)
+
+- **修复报告**：[CVE-2014-6271-Shellshock-修复报告.md](fix/CVE-2014-6271-Shellshock-修复报告.md)
+*（内容由AI生成，仅供参考）*
