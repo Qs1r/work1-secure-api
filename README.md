@@ -78,7 +78,7 @@ Automated security scans via GitHub Actions:
 
 The pipeline configuration is in `.github/workflows/ci.yml`. Most recent successful run:
 
-> [Last successful pipeline run](https://github.com/Qs1r/work1-secure-api/actions/runs/41373188447)
+> [Last successful pipeline run](https://github.com/Qs1r/work1-secure-api/actions)
 
 ### SAST/SCA Report Screenshots
 
