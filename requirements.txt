@@ -1,0 +1,7 @@
+# Work1 Secure REST API - Python dependencies
+# Install: pip install -r requirements.txt
+
+fastapi==0.146.0
+uvicorn==0.54.0
+PyJWT==2.15.1
+bcrypt==5.0.0
